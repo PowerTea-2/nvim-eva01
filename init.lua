@@ -83,8 +83,8 @@ require("ibl").setup({
         current_line_blame = true,
         current_line_blame_opts = { delay = 300 },
       })
-      vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#00FF00" })
-      vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#FFA500" })
+      vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#5A7D4A" })
+      vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#CC8800" })
       vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#FF0000" })
     end,
   },
@@ -96,8 +96,8 @@ require("ibl").setup({
           icons_enabled = false,
           theme = {
             normal = {
-              a = { fg = "#000000", bg = "#FFA500", gui = "bold" },
-              b = { fg = "#00FF00", bg = "#1A1A1A" },
+              a = { fg = "#000000", bg = "#CC8800", gui = "bold" },
+              b = { fg = "#5A7D4A", bg = "#1A1A1A" },
               c = { fg = "#FFFFFF", bg = "#000000" },
             },
           },
@@ -124,7 +124,7 @@ require("ibl").setup({
         },
       })
       vim.api.nvim_set_hl(0, "WhichKeyFloat", { fg = "#FFFFFF", bg = "#000000" })
-      vim.api.nvim_set_hl(0, "WhichKeyBorder", { fg = "#FFA500", bg = "#000000" })
+      vim.api.nvim_set_hl(0, "WhichKeyBorder", { fg = "#CC8800", bg = "#000000" })
     end,
   },
   {
@@ -179,6 +179,29 @@ require("ibl").setup({
     })
   end,
   },
+{
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      -- Use pcall to prevent crashing if the plugin isn't downloaded yet
+      local status_ok, treesitter = pcall(require, "nvim-treesitter.configs")
+      if not status_ok then
+        return -- Exit silently if not found
+      end
+
+      treesitter.setup({
+        -- A list of parser names, or "all"
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust" },
+        sync_install = false,
+        auto_install = true,
+        highlight = {
+          enable = true,
+          -- Disable standard regex highlighting to avoid conflicts
+          additional_vim_regex_highlighting = false,
+        },
+      })
+    end,
+  },
 })
 
 -- 3. CORE SETTINGS
@@ -194,9 +217,9 @@ vim.keymap.set('n', '<C-a>', 'ggVG')
 
 -- 4. THE NERV THEME
 local function apply_nerv_theme()
-    local orange = "#FFA500"
-    local green  = "#00FF00"
-    local purple = "#BF00FF"
+    local orange = "#CC8800"
+    local green  = "#5A7D4A"
+    local purple = "#724D8A"
     local black  = "#000000"
     local white  = "#FFFFFF"
 
@@ -255,7 +278,7 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
 })
-vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#FFA500" })
+vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#CC8800" })
 vim.api.nvim_set_hl(0, "DiagnosticError", { fg = "#FF0000", bold = true })
 
 -- 6. STATUSLINE
